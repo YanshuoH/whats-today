@@ -1,0 +1,15 @@
+{
+  "name": "What's today",
+  "version": "0.1.0",
+  "authors": [
+    "Yanshuo HUANG <yanshuo.huang@gmail.com>",
+    "Shixiao HU <hushixiao@hotmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "3.3.*",
+    "jquery": "2.1.*",
+    "react": "0.13.*",
+    "font-awesome": "4.3.*"
+  }
+}
