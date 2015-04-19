@@ -1,0 +1,24 @@
+/* ------ Responsive web design --------------*/
+@media (min-width: 1200px) {
+  .container {
+    width: 970px;
+  }
+}
+
+@media (min-width: 992px) {
+    .container {
+      width: 970px;
+    }
+}
+
+#wrapper {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+
+
+
+
