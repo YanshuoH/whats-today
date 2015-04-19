@@ -13,10 +13,22 @@
 
 #wrapper {
   position: relative;
-  margin: 0 auto;
+  margin: 60px auto;
   width: 100%;
   overflow-x: hidden;
 }
+
+.page-title {
+  margin: 60px auto;
+  text-align: center;
+}
+
+#loginPanel {
+  max-width: 600px;
+  margin: auto;
+}
+
+
 
 
 
