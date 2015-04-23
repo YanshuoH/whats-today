@@ -11,3 +11,4 @@ Vocabulary learning strategy
 
 ## Run
 * ``` flask\Scripts\python run.py ```
+* Navigator: ``` http://localhost:5000  ```
