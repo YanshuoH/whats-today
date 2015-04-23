@@ -7,7 +7,9 @@ Vocabulary learning strategy
 
 ## Installation
 * Install virtualenv for dev: ``` easy_install virtualenv ```
+* Install create virtual env_variables using virtualenv: ``` virtualenv flask ```
 * Install moduels in file: flask_install, eg. ``` flask\Scripts\pip install flask ```
+* Install bower components: ``` bower install ```
 
 ## Run
 * ``` flask\Scripts\python run.py ```
