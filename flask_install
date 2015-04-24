@@ -6,3 +6,6 @@ flask/Scripts/pip install flask-whooshalchemy
 flask/Scripts/pip install flask-wtf
 flask/Scripts/pip install Flask-Assets
 flask/Scripts/pip install Flask-Script
+flask/Scripts/pip install cssmin
+flask/Scripts/pip install pyScss
+flask/Scripts/pip install closure
