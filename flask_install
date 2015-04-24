@@ -4,3 +4,5 @@ flask/Scripts/pip install flask-sqlalchemy
 flask/Scripts/pip install sqlalchemy-migrate
 flask/Scripts/pip install flask-whooshalchemy
 flask/Scripts/pip install flask-wtf
+flask/Scripts/pip install Flask-Assets
+flask/Scripts/pip install Flask-Script
