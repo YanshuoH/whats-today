@@ -2,3 +2,4 @@ app/static/components/*
 flask/*
 *.pyc
 app/static/built/*
+app/static/.webassets-cache/*
