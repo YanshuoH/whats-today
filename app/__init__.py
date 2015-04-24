@@ -18,4 +18,4 @@ for name, bundle in assets_loader.load_bundles().iteritems():
     assets_env.register(name, bundle)
 
 
-from app import routes
+from app import views
