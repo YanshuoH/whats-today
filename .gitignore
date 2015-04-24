@@ -1,3 +1,4 @@
 app/static/components/*
 flask/*
 *.pyc
+app/static/built/*
