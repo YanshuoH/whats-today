@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="page-title">What's today ? </h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-success" id="loginPanel">
+          <div class="panel-heading">
+            <h3 class="panel-title">Please Login</h3>
+          </div>
+          <div class="panel-body">
+            <form class="form-horizontal">
+              <fieldset>
+                <div class="form-group">
+                  <label for="inputEmail" class="col-md-2 control-label">Email</label>
+                  <div class="col-md-10">
+                    <input class="form-control" id="inputEmail" placeholder="Email" type="text" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword" class="col-md-2 control-label">Password</label>
+                  <div class="col-md-10">
+                    <input class="form-control" id="inputPassword" placeholder="Password" type="password" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-2 col-md-offset-9">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="page-title">New (edit) word</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 well">
+        <form class="form-horizontal">
+          <fieldset>
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="inputWord">Word</label>
+              <div class="col-md-10">
+                <input class="form-control" id="inputWord" placeholder="Enter word" type="text" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="inputExplain">Explanation</label>
+              <div class="col-md-10">
+                <textarea class="form-control" id="inputExplain" rows="3" placeholder="Enter explanation"></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="inputExamples">Examples</label>
+              <div class="col-md-10">
+                <textarea class="form-control" id="inputExamples" rows="5" placeholder="Enter examples"></textarea>
+                <span class="help-block">
+                  Output will be a format of Github markdown
+                </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-10 col-md-offset-2">
+                <button type="reset" class="btn btn-default">Reset</button>
+                <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -23,5 +23,5 @@ def today():
 
 @app.route('/edit')
 def edit():
-    return render_template('edit.html',
+    return render_template('form.html',
                            title='Edit')

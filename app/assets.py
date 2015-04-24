@@ -15,4 +15,4 @@ js = Bundle(
     #     'js/main.js',
     #     filters='closure_js'
     # ),
-    output='built/common.js')
+    )
