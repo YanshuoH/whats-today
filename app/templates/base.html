@@ -11,9 +11,13 @@
     {% else %}
         <title>What's today</title>
     {% endif %}
-    {% block styles %}{% endblock %}
+    {% block styles %}
+        {% include 'include/base_css.html' %}
+    {% endblock %}
 <body>
-{% block nav %}{% endblock %}
+{% block nav %}
+  {% include 'include/nav.html' %}
+{% endblock %}
 
 <div id="wrapper">
   {% block content %}{% endblock %}
@@ -22,6 +26,8 @@
 {% block footer %}
 {% endblock %}
 
-{% block javascripts %} {% endblock %}
+{% block javascripts %}
+  {% include 'include/base_js.html' %}
+{% endblock %}
 </body>
 </html>
