@@ -22,6 +22,6 @@ list_page_react_js = Bundle(
     'js/list_react_ctrl.js')
 
 today_page_react_js = Bundle(
-    'components/react/react.min.js',
     'components/marked/marked.min.js',
+    'components/react/react.min.js',
     'js/today_react_ctrl.js')
