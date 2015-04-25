@@ -30,3 +30,14 @@ class Word(db.Model):
 
     def __repr__(self):
         return '<Word %r>' % (self.name)
+
+    @property
+    def serialize(self):
+        """return object data in easily serializeable format"""
+        return {
+            'id':           self.id,
+            'name':         self.explain,
+            'example':      self.example,
+            'created_at':   self.created_at,
+            'updated_at':   self.updated_at
+        }

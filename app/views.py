@@ -4,7 +4,7 @@ from models import User, Word
 from forms import WordForm
 from oauth import OAuthSignIn
 from flask import request, render_template, redirect, url_for, \
-    render_template, g, flash
+    render_template, g, flash, jsonify
 from flask.ext.login import login_user, logout_user, current_user, \
     login_required
 
@@ -29,6 +29,13 @@ def login():
 def list():
     return render_template('list.html',
                            title='List')
+
+@app.route('/api/list')
+@login_required
+def api_list():
+    words = g.user.words.all()
+    return jsonify(email=g.user.email,
+                   words=[word.serialize for word in words])
 
 @app.route('/today')
 @login_required
