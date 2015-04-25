@@ -17,6 +17,10 @@ js = Bundle(
     # ),
     )
 
-react_js = Bundle(
+list_page_react_js = Bundle(
     'components/react/react.min.js',
-    'js/react_ctrl.js')
+    'js/list_react_ctrl.js')
+
+today_page_react_js = Bundle(
+    'components/react/react.min.js',
+    'js/today_react_ctrl.js')
