@@ -9,8 +9,10 @@ class User(UserMixin, db.Model):
     nickname = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), nullable=True)
 
-    # posts = db.relationship('Word', backref='user', lazy='dynamic')
+    words = db.relationship('Word', backref='user', lazy='dynamic')
 
+    def __repr__(self):
+        return '<User %r>' % (self.email)
 
 @lm.user_loader
 def load_user(id):
@@ -18,12 +20,13 @@ def load_user(id):
 
 class Word(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.Unicode())
-    body = db.Column(db.Unicode())
-    created_at = db.Column(db.DateTime)
-    updated_at = db.Column(db.DateTime)
+    name = db.Column(db.String(300), nullable=False)
+    explain = db.Column(db.Text(), nullable=False)
+    example = db.Column(db.Text(), nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False)
+    updated_at = db.Column(db.DateTime, nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return '<Post %r>' % (self.body)
+        return '<Word %r>' % (self.name)
