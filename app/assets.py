@@ -16,3 +16,7 @@ js = Bundle(
     #     filters='closure_js'
     # ),
     )
+
+react_js = Bundle(
+    'components/react/react.min.js',
+    Bundle('js/react_ctrl.js', filters='closure_js', output='built/react_ctrl.js'))
