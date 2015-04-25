@@ -61,3 +61,10 @@
     </div>
   </div>
 {% endblock %}
+
+{% block javascripts %}
+  {{ super() }}
+  {% assets "today_page_react_js" %}
+      <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+{% endblock %}
