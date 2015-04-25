@@ -15,7 +15,7 @@ var ListWrapView = React.createClass({
         this.setState({ words: data.words });
       }.bind(this),
       error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
+        console.error(this.props.listApiUrl, status, err.toString());
       }.bind(this)
     });
   },
