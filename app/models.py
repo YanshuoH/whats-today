@@ -36,7 +36,8 @@ class Word(db.Model):
         """return object data in easily serializeable format"""
         return {
             'id':           self.id,
-            'name':         self.explain,
+            'name':         self.name,
+            'explain':      self.explain,
             'example':      self.example,
             'created_at':   self.created_at.strftime("%Y-%m-%d %H:%M"),
             'updated_at':   self.updated_at.strftime("%Y-%m-%d %H:%M")
