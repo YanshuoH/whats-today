@@ -1,7 +1,7 @@
 import os.path
 import imp
 
-from app import app, db
+from app import app, db, models
 from app.settings import Config
 from migrate.versioning import api
 from flask.ext.script import Manager, Shell, Server, Command
@@ -70,6 +70,28 @@ def downgraddb():
                        Config.SQLALCHEMY_MIGRATE_REPO)
 
     print('Current database version: ' + str(v))
+
+@manager.command
+def import_dataset():
+  from app import test_dataset
+
+  for user in test_dataset.datasets:
+      user_model = models.User(social_id=user['social_id'],
+                  nickname=user['nickname'],
+                  email=user['email'])
+      db.session.add(user_model)
+      db.session.commit()
+
+      for word in user['words']:
+          word_model = models.Word(name=word['name'],
+                      explain=word['explain'],
+                      example=word['example'],
+                      created_at=word['created_at'],
+                      updated_at=word['updated_at'],
+                      user_id=user_model.id)
+          db.session.add(word_model)
+          db.session.commit()
+
 
 if __name__ == "__main__":
     manager.run()
