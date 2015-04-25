@@ -20,35 +20,58 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <div class="panel panel-success" id="loginPanel">
-          <div class="panel-heading">
-            <h3 class="panel-title">Please Login</h3>
-          </div>
-          <div class="panel-body">
-            <form class="form-horizontal">
-              <fieldset>
-                <div class="form-group">
-                  <label for="inputEmail" class="col-md-2 control-label">Email</label>
-                  <div class="col-md-10">
-                    <input class="form-control" id="inputEmail" placeholder="Email" type="text" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword" class="col-md-2 control-label">Password</label>
-                  <div class="col-md-10">
-                    <input class="form-control" id="inputPassword" placeholder="Password" type="password" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="col-md-2 col-md-offset-9">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-                </div>
-              </fieldset>
-            </form>
-          </div>
-        </div>
+        <button class="btn btn-lg btn-success" onClick='checkLoginState()'>Login with facebook</button>
       </div>
     </div>
   </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ super() }}
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '881538918575060',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v2.3'
+      });
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+
+    function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    }
+
+    function statusChangeCallback(response) {
+      console.log('statusChangeCallback');
+      console.log(response);
+      // The response object is returned with a status field that lets the
+      // app know the current login status of the person.
+      // Full docs on the response object can be found in the documentation
+      // for FB.getLoginStatus().
+      if (response.status === 'connected') {
+        // Logged into your app and Facebook.
+        window.location.href = '{{ url_for('oauth_authorize', provider='facebook')}}';
+      } else if (response.status === 'not_authorized') {
+        // The person is logged into Facebook, but not your app.
+        document.getElementById('status').innerHTML = 'Please log ' +
+          'into this app.';
+      } else {
+        // The person is not logged into Facebook, so we're not sure if
+        // they are logged into this app or not.
+        document.getElementById('status').innerHTML = 'Please log ' +
+          'into Facebook.';
+      }
+    }
+  </script>
 {% endblock %}
