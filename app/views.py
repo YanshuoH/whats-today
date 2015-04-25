@@ -7,7 +7,7 @@ from flask import request, render_template, redirect, url_for, \
     render_template, g, flash, jsonify
 from flask.ext.login import login_user, logout_user, current_user, \
     login_required
-
+from sqlalchemy import and_
 
 @app.route('/')
 @login_required
@@ -42,6 +42,31 @@ def api_list():
 def today():
     return render_template('today.html',
                            title='Today')
+
+@app.route('/api/today')
+@login_required
+def api_today():
+    day_delta = app.config['DAY_DELTA']
+    repeat_delta = app.config['REPEAT_DELTA']
+
+    words_today = []
+    for repeat_count in xrange(repeat_delta):
+        interval = {
+            'left':  datetime.date.today() -\
+                     datetime.timedelta(days=repeat_count * day_delta),
+            'right': datetime.date.today() -\
+                     datetime.timedelta(days=repeat_count * day_delta - 1),
+        }
+        words = db.session.query(Word).filter(
+            and_(
+                Word.created_at.between(interval['left'],
+                                        interval['right']),
+                Word.user_id == g.user.id)
+            ).all()
+        words_today += words
+
+    return jsonify(words=[word.serialize for word in words_today],
+                   today=datetime.date.today().strftime("%Y-%m-%d %H:%M:%S"))
 
 @app.route('/edit', methods=['GET', 'POST'])
 @app.route('/add', methods=['GET', 'POST'])
