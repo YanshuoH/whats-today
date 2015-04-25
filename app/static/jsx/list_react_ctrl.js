@@ -104,7 +104,7 @@ var ListView = React.createClass({
 }); 
 
 var WordRowView = React.createClass({
-  render: function() {
+  render: function () {
     editUrl = '/edit/' + this.props.word.id
     deleteUrl = '/delete/' + this.props.word.id
     return (<tr>
