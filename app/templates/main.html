@@ -9,17 +9,17 @@
     </div>
     <div class="row buttons">
       <div class="col-md-12 center">
-        <button id="btnAdd" class="btn btn-success btn-lg btn-custom">Add</button>
+        <a id="btnAdd" class="btn btn-success btn-lg btn-custom" href="{{ url_for('edit') }}">Add</a>
       </div>
     </div>
     <div class="row buttons">
       <div class="col-md-12 center">
-        <button id="btnList" class="btn btn-success btn-lg btn-custom">List</button>
+        <a id="btnList" class="btn btn-success btn-lg btn-custom" href="{{ url_for('list') }}">List</a>
       </div>
     </div>
     <div class="row buttons">
       <div class="col-md-12 center">
-        <button id="btnToday" class="btn btn-success btn-lg btn-custom-lg">What's today ?</button>
+        <a id="btnToday" class="btn btn-success btn-lg btn-custom-lg"href="{{ url_for('today') }}">What's today ?</a>
       </div>
     </div>
   </div>
