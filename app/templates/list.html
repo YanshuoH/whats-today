@@ -7,9 +7,10 @@
         <h1 class="page-title">List of words</h1>
       </div>
     </div>
+    <div id="listReactWrap" data-url="{{ url_for('api_list') }}" data-load-interval="{{ interval }}"></div>
     <div class="row">
       <div class="col-md-12 well">
-        <form class="form-horizontal no-margin-bottom">
+        <div class="form-horizontal no-margin-bottom">
           <fieldset>
             <div class="form-group">
               <label for="inputWord" class="col-md-2 control-label">Search: </label>
@@ -17,11 +18,11 @@
                 <input type="text" class="form-control" id="inputWord" placeholder="Enter word">
               </div>
               <div class="col-md-2">
-                <button class="btn btn-success" type="submit">Submit</button>
+                <button class="btn btn-success">Submit</button>
               </div>
             </div>
           </fieldset>
-        </form>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -98,4 +99,11 @@
       </div>
     </div>
   </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ super() }}
+  {% assets "react_js" %}
+      <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
 {% endblock %}
