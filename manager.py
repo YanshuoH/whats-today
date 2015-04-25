@@ -56,7 +56,7 @@ def upgraddb():
                 Config.SQLALCHEMY_MIGRATE_REPO)
     v = api.db_version(Config.SQLALCHEMY_DATABASE_URI,
                        Config.SQLALCHEMY_MIGRATE_REPO)
-    print('Current database version: ' + str(v))
+    print 'Current database version: ' + str(v)
 
 
 @manager.command
@@ -69,28 +69,30 @@ def downgraddb():
     v = api.db_version(Config.SQLALCHEMY_DATABASE_URI,
                        Config.SQLALCHEMY_MIGRATE_REPO)
 
-    print('Current database version: ' + str(v))
+    print 'Current database version: ' + str(v)
 
 @manager.command
 def import_dataset():
-  from app import test_dataset
+    from app import test_dataset
 
-  for user in test_dataset.datasets:
-      user_model = models.User(social_id=user['social_id'],
-                  nickname=user['nickname'],
-                  email=user['email'])
-      db.session.add(user_model)
-      db.session.commit()
+    for user in test_dataset.datasets:
+        user_model = models.User(social_id=user['social_id'],
+                    nickname=user['nickname'],
+                    email=user['email'])
+        db.session.add(user_model)
+        db.session.commit()
+  
+        for word in user['words']:
+            word_model = models.Word(name=word['name'],
+                        explain=word['explain'],
+                        example=word['example'],
+                        created_at=word['created_at'],
+                        updated_at=word['updated_at'],
+                        user_id=user_model.id)
+            db.session.add(word_model)
+            db.session.commit()
 
-      for word in user['words']:
-          word_model = models.Word(name=word['name'],
-                      explain=word['explain'],
-                      example=word['example'],
-                      created_at=word['created_at'],
-                      updated_at=word['updated_at'],
-                      user_id=user_model.id)
-          db.session.add(word_model)
-          db.session.commit()
+    print 'Import ends'
 
 
 if __name__ == "__main__":
