@@ -27,8 +27,10 @@ def login():
 @app.route('/list')
 @login_required
 def list():
+    interval = app.config['LIST_AUTOLOAD_INTERVAL']
     return render_template('list.html',
-                           title='List')
+                           title='List',
+                           interval=interval)
 
 @app.route('/api/list')
 @login_required
