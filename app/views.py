@@ -1,7 +1,10 @@
+import datetime
 from app import app, db, lm
-from models import User
+from models import User, Word
+from forms import WordForm
 from oauth import OAuthSignIn
-from flask import render_template, redirect, url_for, render_template
+from flask import request, render_template, redirect, url_for, \
+    render_template, g, flash
 from flask.ext.login import login_user, logout_user, current_user, \
     login_required
 
@@ -33,11 +36,36 @@ def today():
     return render_template('today.html',
                            title='Today')
 
-@app.route('/edit')
+@app.route('/edit', methods=['GET', 'POST'])
+@app.route('/add', methods=['GET', 'POST'])
 @login_required
 def edit():
+    rule = request.url_rule
+
+    if 'edit' in rule.rule:
+        title = 'Edit'
+    elif 'add' in rule.rule:
+        title = 'Add'
+
+    # Receiving data
+    form = WordForm()
+    if form.validate_on_submit():
+        print form.data
+        word = Word(name=form.name.data,
+                    explain=form.explain.data,
+                    example=form.example.data,
+                    created_at=datetime.datetime.utcnow(),
+                    updated_at=datetime.datetime.utcnow(),
+                    user_id=g.user.id)
+
+        db.session.add(word)
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('index'))
+
     return render_template('form.html',
-                           title='Edit')
+                           form=form,
+                           title=title)
 
 @app.route('/logout')
 @login_required
@@ -71,3 +99,7 @@ def oauth_callback(provider):
         db.session.commit()
     login_user(user, True)
     return redirect(url_for('index'))
+
+@app.before_request
+def before_request():
+    g.user = current_user
