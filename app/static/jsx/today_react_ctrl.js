@@ -125,7 +125,7 @@ Pager = React.createClass({
     this.props.handleNextClickCallback();
   },
   render: function () {
-    var style = (this.props.pos / this.props.wordCount) * 100;
+    var style = (this.props.pos / (this.props.wordCount - 1)) * 100;
     style = { width: style.toString() + '%' };
     return (<div className='row'>
               <div className='col-md-12'>
