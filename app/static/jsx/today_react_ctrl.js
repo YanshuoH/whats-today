@@ -4,7 +4,9 @@ TodayWrapView = React.createClass({
     return {
       currentWord: null,
       pos: 0,
-      words: []
+      wordCount: 0,
+      words: [],
+      isDone: false
     }
   },
   loadWordsFromServer: function () {
@@ -13,7 +15,10 @@ TodayWrapView = React.createClass({
       dataType: 'json',
       success: function(data) {
         this.props.words = data.words;
-        this.setState({ currentWord: data.words[this.state.pos] });
+        this.setState({
+          currentWord: data.words[this.state.pos],
+          wordCount: data.words.length
+        });
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.todayApiUrl, status, err.toString());
@@ -25,21 +30,27 @@ TodayWrapView = React.createClass({
   },
   handleNextClickCallback: function () {
     this.state.pos += 1;
-    this.setState({
-      pos: this.state.pos,
-      currentWord: this.props.words[this.state.pos]
-    });
+    if (this.state.pos > this.props.words.length) {
+      this.setState({ isDone: true });
+    } else {
+      this.setState({
+        pos: this.state.pos,
+        currentWord: this.props.words[this.state.pos]
+      });
+    }
   },
   handlePreviousClickCallback: function () {
-    this.state.pos -= 1;
-    this.setState({
-      pos: this.state.pos,
-      currentWord: this.props.words[this.state.pos]
-    });
+    if (this.state.pos > 0) {
+      this.state.pos -= 1;
+      this.setState({
+        pos: this.state.pos,
+        currentWord: this.props.words[this.state.pos]
+      });
+    }
   },
   render: function () {
+    // No word for today
     if (this.state.currentWord === undefined) {
-      // No word for today
       return (<div><Title name={'No word for today'} /></div>)
     }
     if (this.state.currentWord !== null) {
@@ -47,7 +58,9 @@ TodayWrapView = React.createClass({
                 <Title name={this.state.currentWord.name}/>
                 <BlockWrap word={this.state.currentWord}/>
                 <Pager handleNextClickCallback={this.handleNextClickCallback}
-                       handlePreviousClickCallback={this.handlePreviousClickCallback} />
+                       handlePreviousClickCallback={this.handlePreviousClickCallback}
+                       pos={this.state.pos}
+                       wordCount={this.state.wordCount} />
               </div>)
     } else {
       return (<div><Title name={'loading...'} /></div>)
@@ -116,10 +129,16 @@ Pager = React.createClass({
               <div className='col-md-12'>
                 <ul className="pager">
                   <li className="previous">
-                    <a href="#" onClick={this.handlePreviousClick}>Previous</a>
+                    <a href="#"
+                       onClick={this.handlePreviousClick}
+                       className={this.props.pos > 0 ? '' : 'hidden'}
+                    >Previous</a>
                   </li>
                   <li className="next">
-                    <a href="#" onClick={this.handleNextClick}>Next</a>
+                    <a href="#"
+                       onClick={this.handleNextClick}
+                       className={this.props.pos === this.props.wordCount - 1 ? 'hidden' : ''}
+                    >Next</a>
                   </li>
                 </ul>
               </div>
