@@ -1,65 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h1 class="page-title">Ipsum</h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="list-group">
-          <a class="list-group-item">
-            <h4 class="list-group-item-heading">
-              Explanation:
-            </h4>
-            <p class="list-group-item-text">
-              Nulla facilisi. Phasellus viverra nulla ut metus varius laoreet.
-              Phasellus ullamcorper ipsum rutrum nunc. Fusce convallis metus id felis luctus adipiscing.
-            </p>
-          </a>
-          <a class="list-group-item">
-            <h4 class="list-group-item-heading">
-              Examples:
-            </h4>
-            <ul>
-              <li>
-                <p class="list-group-item-text">
-                  Nulla facilisi. Phasellus viverra nulla ut metus varius laoreet.
-                  Phasellus ullamcorper ipsum rutrum nunc. Fusce convallis metus id felis luctus adipiscing.
-                </p>
-              </li>
-              <li>
-                <p class="list-group-item-text">
-                  Nulla facilisi. Phasellus viverra nulla ut metus varius laoreet.
-                  Phasellus ullamcorper ipsum rutrum nunc. Fusce convallis metus id felis luctus adipiscing.
-                </p>
-              </li>
-              <li>
-                <p class="list-group-item-text">
-                  Nulla facilisi. Phasellus viverra nulla ut metus varius laoreet.
-                  Phasellus ullamcorper ipsum rutrum nunc. Fusce convallis metus id felis luctus adipiscing.
-                </p>
-              </li>
-            </ul>
-          </a>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <ul class="pager">
-          <li class="previous">
-            <a href="#">Previous</a>
-          </li>
-          <li class="next">
-            <a href="#">Next</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
   <div class="container" id="todayWrapView" data-url="{{ url_for('api_today') }}">
 {% endblock %}
 
