@@ -40,19 +40,71 @@
               <div class="col-md-10">
                 {{ form.example(class_="form-control", placeholder='Enter examples', rows='5') }}
                 <span class="help-block">
-                  Output will be a format of Github markdown
+                  Output will be a format of <a href="https://help.github.com/articles/markdown-basics/">Github markdown</a>
                 </span>
               </div>
             </div>
             <div class="form-group">
               <div class="col-md-10 col-md-offset-2">
                 <button type="reset" class="btn btn-default">Reset</button>
+                <button id="previewButton" class="btn btn-info">Preview</button>
                 <button type="submit" class="btn btn-success">Submit</button>
               </div>
             </div>
           </fieldset>
         </form>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div class="list-group">
+              <a class="list-group-item">
+                <h4 class="list-group-item-heading">
+                  Word:
+                </h4>
+                <div class="list-group-item-text" id="nameRenderBlock"></div>
+              </a>
+              <a class="list-group-item">
+                <h4 class="list-group-item-heading">
+                  Explanation:
+                </h4>
+                <div class="list-group-item-text" id="explainRenderBlock"></div>
+              </a>
+              <a class="list-group-item">
+                <h4 class="list-group-item-heading">
+                  Examples:
+                </h4>
+                <div class="list-group-item-text" id="exampleRenderBlock"></div>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ super() }}
+  {% assets "form_page_js" %}
+      <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+
+  <script type="text/javascript">
+    $('#previewButton').on('click', function (e) {
+      e.preventDefault();
+
+      var name = $('input#name');
+      var explain = $('textarea#explain');
+      var example = $('textarea#example');
+      var nameRenderBlock = $('#nameRenderBlock');
+      var explainRenderBlock = $('#explainRenderBlock');
+      var exampleRenderBlock = $('#exampleRenderBlock');
+
+      var nameVal = name.val();
+      var explainVal = explain.val();
+      var exampleVal = example.val();
+      nameRenderBlock.html(marked(nameVal));
+      explainRenderBlock.html(marked(explainVal));
+      exampleRenderBlock.html(marked(exampleVal));
+    });
+  </script>
 {% endblock %}

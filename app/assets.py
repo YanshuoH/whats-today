@@ -25,3 +25,6 @@ today_page_react_js = Bundle(
     'components/marked/marked.min.js',
     'components/react/react.min.js',
     'js/today_react_ctrl.js')
+
+form_page_js = Bundle(
+    'components/marked/marked.min.js')
