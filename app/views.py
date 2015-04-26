@@ -49,15 +49,14 @@ def today():
 @login_required
 def api_today():
     day_delta = app.config['DAY_DELTA']
-    repeat_delta = app.config['REPEAT_DELTA']
 
     words_today = []
-    for repeat_count in xrange(repeat_delta):
+    for repeat_count in xrange(len(day_delta)):
         interval = {
             'left':  datetime.date.today() -\
-                     datetime.timedelta(days=repeat_count * day_delta),
+                     datetime.timedelta(days=day_delta[repeat_count]),
             'right': datetime.date.today() -\
-                     datetime.timedelta(days=repeat_count * day_delta - 1),
+                     datetime.timedelta(days=day_delta[repeat_count] - 1),
         }
         words = db.session.query(Word).filter(
             and_(
