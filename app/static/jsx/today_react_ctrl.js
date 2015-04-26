@@ -94,24 +94,24 @@ BlockWrap = React.createClass({
 Explain = React.createClass({
   render: function () {
     var explainMarkup = marked(this.props.explain.toString(), {sanitize: true});
-    return (<div className='list-group-item'>
+    return (<a className='list-group-item'>
               <h4 className='list-group-item-heading'>{ 'Explaination:' }</h4>
               <div className='list-group-item-text'>
                 <span dangerouslySetInnerHTML={{__html: explainMarkup}} />
               </div>
-            </div>)
+            </a>)
   }
 });
 
 Example = React.createClass({
   render: function () {
     var exampleMarkup = marked(this.props.example.toString(), {sanitize: true});
-    return (<div className='list-group-item'>
+    return (<a className='list-group-item'>
               <h4 className='list-group-item-heading'>{ 'Examples:' }</h4>
               <div className='list-group-item-text'>
                 <span dangerouslySetInnerHTML={{__html: exampleMarkup}} />
               </div>
-            </div>)
+            </a>)
   }
 });
 
