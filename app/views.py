@@ -10,10 +10,11 @@ from flask.ext.login import login_user, logout_user, current_user, \
 from sqlalchemy import and_
 
 @app.route('/')
+@app.route('/today')
 @login_required
-def index():
-    return render_template('main.html',
-                           title='Main')
+def today():
+    return render_template('today.html',
+                           title='Today')
 
 @lm.unauthorized_handler
 def unauthorized_callback():
@@ -39,11 +40,7 @@ def api_list():
     return jsonify(email=g.user.email,
                    words=[word.serialize for word in words])
 
-@app.route('/today')
-@login_required
-def today():
-    return render_template('today.html',
-                           title='Today')
+
 
 @app.route('/api/today')
 @login_required
