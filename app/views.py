@@ -99,6 +99,9 @@ def edit(word_id):
     if word == None:
         flash('Word not found. Add a word!')
         return redirect(url_for('add'))
+    elif word.user_id != g.user.id:
+        flash('You can\'t edit this word!')
+        return redirect(url_for('add'))
     else:
         form = WordForm(obj=word)
         if form.validate_on_submit():
@@ -113,6 +116,24 @@ def edit(word_id):
                            form=form,
                            title='Edit',
                            word=word.name)
+
+@app.route('/delete/<int:word_id>', methods=['DELETE'])
+@login_required
+def delete(word_id):
+    word = Word.query.filter_by(id=word_id).first()
+
+    if word == None:
+        return jsonify(status=302,
+                       message=('Word not found.'))
+    elif word.user_id != g.user.id:
+        return jsonify(status=401,
+                       message=('You can\'t delete this word!'))
+    else:
+        db.session.delete(word)
+        db.session.commit()
+
+    return jsonify(status=200,
+                   message=('word %s deleted' % word.id))
 
 @app.route('/logout')
 @login_required

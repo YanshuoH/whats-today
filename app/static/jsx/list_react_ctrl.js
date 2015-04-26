@@ -23,9 +23,33 @@ var ListWrapView = React.createClass({
     this.loadWordsFromServer();
     setInterval(this.loadWordsFromServer, this.props.dataLoadInterval);
   },
+  handleDeleteClickCallback: function (wordID) {
+    var results = $.grep(this.props.words, function (word) {
+      if (wordID === word.id) {
+        return true;
+      }
+
+      return false;
+    });
+    searchText = document.getElementById('searchText').value.trim();
+
+    if (results.length === 1) {
+      // Update index words
+      var indexProps = this.props.words.indexOf(results[0]);
+      var indexState = this.state.words.indexOf(results[0]);
+      if (indexProps > -1) {
+        this.props.words.splice(indexProps, 1);
+      }
+
+      if (indexState > -1) {
+        this.state.words.splice(indexState, 1);
+        this.setState({ words: this.state.words });
+      }
+    }
+  },
   handleSearchSubmit: function (searchText) {
     if (searchText.length > 0) {
-      var results = $.grep(this.state.words, function (word) {
+      var results = $.grep(this.props.words, function (word) {
         var n = word.name.search(new RegExp(searchText, 'i'));
         if (n > -1) {
           return true;
@@ -42,7 +66,7 @@ var ListWrapView = React.createClass({
   render: function () {
     return (<div>
         <SearchView handleSearchSubmitCallback={this.handleSearchSubmit}/>
-        <ListView words={this.state.words}/>
+        <ListView words={this.state.words} handleDeleteClickCallback={this.handleDeleteClickCallback}/>
         </div>)
   }
 });
@@ -61,7 +85,7 @@ var SearchView = React.createClass({
                     <div className='form-group'>
                       <label className='col-md-2 control-label'>{'Search: '}</label>
                       <div className='col-md-8'>
-                        <input className='form-control' type='text' placeholder='Search Word' ref='searchText'/>
+                        <input className='form-control' type='text' placeholder='Search Word' id='searchText' ref='searchText'/>
                       </div>
                       <div className='col-md-2'>
                         <button className="btn btn-success" onClick={this.handleSearchClick}>{'Submit'}</button>
@@ -76,9 +100,10 @@ var SearchView = React.createClass({
 
 var ListView = React.createClass({
   render: function () {
+    var self = this;
     var wordRowNodes = this.props.words.map(function (word) {
       return (
-        <WordRowView word={word} />
+        <WordRowView word={word} handleDeleteClickCallback={self.props.handleDeleteClickCallback}/>
       );
     });
 
@@ -104,6 +129,20 @@ var ListView = React.createClass({
 }); 
 
 var WordRowView = React.createClass({
+  handleDeleteClick: function (e) {
+    var self = this;
+    e.preventDefault();
+    $.ajax({
+      url: '/delete/' + this.props.word.id,
+      type: 'DELETE',
+      success: function(data) {
+        self.props.handleDeleteClickCallback(this.props.word.id);
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error('delete', status, err.toString());
+      }.bind(this)
+    });
+  },
   render: function () {
     editUrl = '/edit/' + this.props.word.id
     deleteUrl = '/delete/' + this.props.word.id
@@ -116,7 +155,8 @@ var WordRowView = React.createClass({
                 <a href={editUrl} className='no-decoration'>
                   <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
-                <a href={editUrl} className='no-decoration'>
+                <span className="glyphicon-hold"></span>
+                <a href='#' className='no-decoration' onClick={this.handleDeleteClick}>
                   <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
                 </a>
               </td>
