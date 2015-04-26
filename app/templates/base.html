@@ -21,6 +21,9 @@
 {% endblock %}
 
 <div id="wrapper">
+  {% block message %}
+    {% include 'include/message.html' %}
+  {% endblock %}
   {% block content %}{% endblock %}
 </div>
 

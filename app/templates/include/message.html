@@ -1,0 +1,62 @@
+<div class="container message-container">
+{% block error %}
+  {% with errors = get_flashed_messages(category_filter=["error"]) %}
+    {% if errors %}
+    <div class="alert alert-dismissible alert-danger">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <ul>
+        {% for msg in errors %}
+        <li>{{ msg }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  {% endwith %}
+{% endblock %}
+
+{% block info %}
+  {% with infos = get_flashed_messages(category_filter=["info"]) %}
+    {% if infos %}
+    <div class="alert alert-dismissible alert-info">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <ul>
+        {% for msg in infos %}
+        <li>{{ msg }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  {% endwith %}
+{% endblock %}
+
+{% block success %}
+  {% with success = get_flashed_messages(category_filter=["success"]) %}
+    {% if success %}
+    <div class="alert alert-dismissible alert-success">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <ul>
+        {% for msg in success %}
+        <li>{{ msg }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  {% endwith %}
+{% endblock %}
+
+{% block warning %}
+  {% with warning = get_flashed_messages(category_filter=["warning"]) %}
+    {% if warning %}
+    <div class="alert alert-dismissible alert-warning">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <ul>
+        {% for msg in warning %}
+        <li>{{ msg }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  {% endwith %}
+{% endblock %}
+</div>
+
