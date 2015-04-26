@@ -3,6 +3,7 @@ TodayWrapView = React.createClass({
   getInitialState: function () {
     return {
       currentWord: null,
+      pos: 0,
       words: []
     }
   },
@@ -11,9 +12,8 @@ TodayWrapView = React.createClass({
       url: this.props.todayApiUrl,
       dataType: 'json',
       success: function(data) {
-        console.log(data);
         this.props.words = data.words;
-        this.setState({ currentWord: data.words[0] });
+        this.setState({ currentWord: data.words[this.state.pos] });
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.todayApiUrl, status, err.toString());
@@ -23,12 +23,31 @@ TodayWrapView = React.createClass({
   componentDidMount: function () {
     this.loadWordsFromServer();
   },
+  handleNextClickCallback: function () {
+    this.state.pos += 1;
+    this.setState({
+      pos: this.state.pos,
+      currentWord: this.props.words[this.state.pos]
+    });
+  },
+  handlePreviousClickCallback: function () {
+    this.state.pos -= 1;
+    this.setState({
+      pos: this.state.pos,
+      currentWord: this.props.words[this.state.pos]
+    });
+  },
   render: function () {
+    if (this.state.currentWord === undefined) {
+      // No word for today
+      return (<div><Title name={'No word for today'} /></div>)
+    }
     if (this.state.currentWord !== null) {
       return (<div>
                 <Title name={this.state.currentWord.name}/>
                 <BlockWrap word={this.state.currentWord}/>
-                <Pager />
+                <Pager handleNextClickCallback={this.handleNextClickCallback}
+                       handlePreviousClickCallback={this.handlePreviousClickCallback} />
               </div>)
     } else {
       return (<div><Title name={'loading...'} /></div>)
@@ -64,7 +83,9 @@ Explain = React.createClass({
     var explainMarkup = marked(this.props.explain.toString(), {sanitize: true});
     return (<div className='list-group-item'>
               <h4 className='list-group-item-heading'>{ 'Explaination:' }</h4>
-              <p className='list-group-item-text' dangerouslySetInnerHTML={{__html: explainMarkup}}></p>
+              <div className='list-group-item-text'>
+                <span dangerouslySetInnerHTML={{__html: explainMarkup}} />
+              </div>
             </div>)
   }
 });
@@ -74,21 +95,31 @@ Example = React.createClass({
     var exampleMarkup = marked(this.props.example.toString(), {sanitize: true});
     return (<div className='list-group-item'>
               <h4 className='list-group-item-heading'>{ 'Examples:' }</h4>
-              <p className='list-group-item-text' dangerouslySetInnerHTML={{__html: exampleMarkup}}></p>
+              <div className='list-group-item-text'>
+                <span dangerouslySetInnerHTML={{__html: exampleMarkup}} />
+              </div>
             </div>)
   }
 });
 
 Pager = React.createClass({
+  handlePreviousClick: function (e) {
+    e.preventDefault();
+    this.props.handlePreviousClickCallback();
+  },
+  handleNextClick: function (e) {
+    e.preventDefault();
+    this.props.handleNextClickCallback();
+  },
   render: function () {
     return (<div className='row'>
               <div className='col-md-12'>
                 <ul className="pager">
                   <li className="previous">
-                    <a href="#">Previous</a>
+                    <a href="#" onClick={this.handlePreviousClick}>Previous</a>
                   </li>
                   <li className="next">
-                    <a href="#">Next</a>
+                    <a href="#" onClick={this.handleNextClick}>Next</a>
                   </li>
                 </ul>
               </div>
