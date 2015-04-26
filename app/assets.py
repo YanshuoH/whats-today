@@ -28,3 +28,6 @@ today_page_react_js = Bundle(
 
 form_page_js = Bundle(
     'components/marked/marked.min.js')
+
+font_awesome_css = Bundle(
+    'components/font-awesome/css/font-awesome.min.css')
