@@ -53,8 +53,8 @@
             </div>
           </fieldset>
         </form>
-        <div class="row">
-          <div class="col-md-10 col-md-offset-1">
+        <div class="row" id="previewWrap" style="display: none;">
+          <div class="col-md-10 col-md-offset-2">
             <div class="list-group">
               <a class="list-group-item">
                 <h4 class="list-group-item-heading">
@@ -92,12 +92,15 @@
     $('#previewButton').on('click', function (e) {
       e.preventDefault();
 
+      var previewWrap = $('#previewWrap');
       var name = $('input#name');
       var explain = $('textarea#explain');
       var example = $('textarea#example');
       var nameRenderBlock = $('#nameRenderBlock');
       var explainRenderBlock = $('#explainRenderBlock');
       var exampleRenderBlock = $('#exampleRenderBlock');
+
+      previewWrap.fadeIn();
 
       var nameVal = name.val();
       var explainVal = explain.val();
