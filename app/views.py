@@ -22,6 +22,9 @@ def unauthorized_callback():
 
 @app.route('/login')
 def login():
+    if current_user.is_authenticated():
+        return redirect(url_for('today'))
+
     return render_template('login.html',
                            title='Login')
 
@@ -81,8 +84,8 @@ def add():
 
         db.session.add(word)
         db.session.commit()
-        flash('Your changes have been saved.')
-        return redirect(url_for('index'))
+        flash('Your word have been saved.', 'info')
+        return redirect(url_for('add'))
 
     return render_template('form.html',
                            form=form,
@@ -94,10 +97,10 @@ def edit(word_id):
     word = Word.query.filter_by(id=word_id).first()
 
     if word == None:
-        flash('Word not found. Add a word!')
+        flash('Word not found. Add a word!', 'info')
         return redirect(url_for('add'))
     elif word.user_id != g.user.id:
-        flash('You can\'t edit this word!')
+        flash('You can\'t edit this word!', 'warning')
         return redirect(url_for('add'))
     else:
         form = WordForm(obj=word)
@@ -136,12 +139,12 @@ def delete(word_id):
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 @app.route('/authorize/<provider>')
 def oauth_authorize(provider):
     if not current_user.is_anonymous():
-        return redirect(url_for('index'))
+        return redirect(url_for('login'))
 
     oauth = OAuthSignIn.get_provider(provider)
     return oauth.authorize()
@@ -149,12 +152,12 @@ def oauth_authorize(provider):
 @app.route('/callback/<provider>')
 def oauth_callback(provider):
     if not current_user.is_anonymous():
-        return redirect(url_for('index'))
+        return redirect(url_for('login'))
 
     oauth = OAuthSignIn.get_provider(provider)
     social_id, username, email = oauth.callback()
     if social_id is None:
-        flash('Authentication failed.')
+        flash('Authentication failed.', 'error')
         return redirect(url_for('login'))
 
     user = User.query.filter_by(social_id=social_id).first()
@@ -163,7 +166,8 @@ def oauth_callback(provider):
         db.session.add(user)
         db.session.commit()
     login_user(user, True)
-    return redirect(url_for('index'))
+
+    return redirect(url_for('today'))
 
 @app.before_request
 def before_request():
