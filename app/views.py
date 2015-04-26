@@ -69,21 +69,12 @@ def api_today():
     return jsonify(words=[word.serialize for word in words_today],
                    today=datetime.date.today().strftime("%Y-%m-%d %H:%M:%S"))
 
-@app.route('/edit', methods=['GET', 'POST'])
 @app.route('/add', methods=['GET', 'POST'])
 @login_required
-def edit():
-    rule = request.url_rule
-
-    if 'edit' in rule.rule:
-        title = 'Edit'
-    elif 'add' in rule.rule:
-        title = 'Add'
-
+def add():
     # Receiving data
     form = WordForm()
     if form.validate_on_submit():
-        print form.data
         word = Word(name=form.name.data,
                     explain=form.explain.data,
                     example=form.example.data,
@@ -98,7 +89,30 @@ def edit():
 
     return render_template('form.html',
                            form=form,
-                           title=title)
+                           title='Add')
+
+@app.route('/edit/<int:word_id>', methods=['GET', 'POST'])
+@login_required
+def edit(word_id):
+    word = Word.query.filter_by(id=word_id).first()
+
+    if word == None:
+        flash('Word not found. Add a word!')
+        return redirect(url_for('add'))
+    else:
+        form = WordForm(obj=word)
+        if form.validate_on_submit():
+            word.name = form.name.data
+            word.explain = form.explain.data
+            word.example = form.example.data
+            word.updated_at = datetime.datetime.utcnow()
+            db.session.add(word)
+            db.session.commit()
+
+    return render_template('form.html',
+                           form=form,
+                           title='Edit',
+                           word=word.name)
 
 @app.route('/logout')
 @login_required

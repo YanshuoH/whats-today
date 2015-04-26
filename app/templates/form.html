@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <h1 class="page-title">{{ title }} word</h1>
+        <h1 class="page-title">{% if word %}"{{ word }}"{% else %}Add a word{% endif %}</h1>
       </div>
     </div>
     <div class="row">
@@ -20,7 +20,7 @@
               </ul>
           </div>
         {% endif %}
-        <form class="form-horizontal" action="{{ url_for('edit') }}" method='POST'>
+        <form class="form-horizontal" action="{{ request.path }}" method='POST'>
           {{ form.hidden_tag() }}
           <fieldset>
             <div class="form-group {% if 'name' in form.errors %} has-error {% endif %}">
