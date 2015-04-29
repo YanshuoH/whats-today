@@ -125,7 +125,7 @@ Pager = React.createClass({
     this.props.handleNextClickCallback();
   },
   render: function () {
-    var style = (this.props.pos / (this.props.wordCount - 1)) * 100;
+    var style = ((this.props.pos + 1) / (this.props.wordCount)) * 100;
     style = { width: style.toString() + '%' };
     return (<div className='row'>
               <div className='col-md-12'>
@@ -139,7 +139,7 @@ Pager = React.createClass({
                        className={this.props.pos > 0 ? '' : 'hidden'}
                     >Previous</a>
                   </li>
-                  <li><span className='page-count'>{ this.props.pos + '/' + (this.props.wordCount - 1) }</span></li>
+                  <li><span className='page-count'>{ (this.props.pos + 1) + '/' + (this.props.wordCount) }</span></li>
                   <li className="next">
                     <a href="#"
                        onClick={this.handleNextClick}
