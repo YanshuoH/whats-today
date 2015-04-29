@@ -144,7 +144,7 @@ def logout():
 @app.route('/authorize/<provider>')
 def oauth_authorize(provider):
     if not current_user.is_anonymous():
-        return redirect(url_for('login'))
+        return redirect(url_for('today'))
 
     oauth = OAuthSignIn.get_provider(provider)
     return oauth.authorize()
@@ -152,7 +152,7 @@ def oauth_authorize(provider):
 @app.route('/callback/<provider>')
 def oauth_callback(provider):
     if not current_user.is_anonymous():
-        return redirect(url_for('login'))
+        return redirect(url_for('today'))
 
     oauth = OAuthSignIn.get_provider(provider)
     social_id, username, email = oauth.callback()

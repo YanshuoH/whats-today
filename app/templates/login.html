@@ -13,9 +13,8 @@
           <div class="panel-body">
             <div class="row">
               <div class="col-md-12">
-                <div class="fb-login-button" data-max-rows="5" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false">
-                  Login with Facebook
-                </div>
+                <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" size="xlarge">
+                </fb:login-button>
               </div>
               <div class="col-md-12">
                 <button class="btn btn-lg weibo-color btn-login"><i class="fa fa-weibo fa-4"></i> Login with Weibo (TODO)</button>
