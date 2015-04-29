@@ -3,3 +3,5 @@ flask/*
 *.pyc
 app/static/built/*
 app/static/.webassets-cache/*
+app/app.db
+app/db_repository/*
