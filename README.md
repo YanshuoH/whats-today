@@ -21,3 +21,13 @@ Vocabulary learning strategy
 
 ## Developement
 * Jsx watching: ```jsx --watch app/static/jsx/ app/static/js```
+
+## Deploiement (ENV: Centos 7)
+Assuming you have MySQL, PYTHON 2.6+, Apache etc already.
+* Git clone
+* ```virtualenv flask```
+* ```flask/bin/pip install -r requirements.txt```
+* ```flask/bin/pip install mysql-python```
+* Setup env variable for DB path :
+  * ```$ WHATSTODAY_DATABASE_URL=mysql://example:example@localhost/example```
+  * Then write it to the ENV ```export WHATSTODAY_DATABASE_URL```
