@@ -22,7 +22,7 @@ Vocabulary learning strategy
 ## Developement
 * Jsx watching: ```jsx --watch app/static/jsx/ app/static/js```
 
-## Deploiement (ENV: Centos 7 - DigitalOcean)
+## Deployment (ENV: Centos 7 - DigitalOcean)
 Assuming you have MySQL, PYTHON 2.6+, Nginx etc already.
 
 Principal thoughts explained in example of [uWSGI](http://uwsgi-docs.readthedocs.org/en/latest/tutorials/Django_and_nginx.html)
