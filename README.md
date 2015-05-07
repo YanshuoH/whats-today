@@ -95,12 +95,20 @@ Here's how to proceed
              uwsgi_pass whatstoday;
          }
  
+         # Cache static files
          location /static {
              alias /home/user/apps/whats-today/app/static;
+             expires 1d;
+             add_header Cache-Control "public";
+         }
+         
+         # No cache for html/data files etc
+         location ~* \.(?:manifest|appcache|html?|xml|json)$ {
+             expires -1;
          }
      }
      ```
-   * Also make sure your Nginx runs by correct user-group
+   * Also make sure your Nginx runs by correct user-group (I know a group of apache nginx is weird...)
 
      ```
       sudo vim /etc/nginx/nginx.conf
@@ -118,7 +126,8 @@ Here's how to proceed
    * http://YOUR_IP_OR_DOMAIN:8000/
 
 ## Always TODOS
-* Use flask-cache - nginx to cache assets
+* Use flask-cache to cache html
+* Use ~~nginx~~ to cache assets
 * Minify react's JS files
 * Logger
 * Mailer system
