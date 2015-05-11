@@ -8,7 +8,7 @@ Vocabulary learning strategy
 ## Installation
 * Install virtualenv for dev: ``` easy_install virtualenv ```
 * Install create virtual env_variables using virtualenv: ``` virtualenv flask ```
-* Install moduels in file: flask_install, eg. ``` flask\Scripts\pip install flask ```
+* Install moduels in file: requirements.txt, eg. ``` flask\Scripts\pip install -r requirements.txt ```
 * Install npm modules: ``` npm install ```
   * Above that, for windows, modules like gulp and react-tools should be installed using ```-g```
 * Install bower components: ``` bower install ```
