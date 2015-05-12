@@ -14,6 +14,7 @@ Vocabulary learning strategy
 * Install bower components: ``` bower install ```
 * Compile jsx file to js: ```jsx app/static/jsx/ app/static/js/```
 * Create basic database: ```flask/Scripts/python manager.py createdb```
+* Create your own *settings.py* using the template of *settings.example.py*, add your own OAUTH_CRENDENTIALS, and change the SECRET_KEY if you're not too lazy
 
 ## Run
 * ``` flask/Scripts/python manager.py runserver ```
@@ -124,6 +125,32 @@ Here's how to proceed
      sudo systemctl enable nginx
      ```
    * http://YOUR_IP_OR_DOMAIN:8000/
+
+## Something about memcached (Not completed yet)
+This project uses Flask-Cache's memcached system, so it requires
+* *pylibmc* which requires also *libmemcached* in system's ENV
+ ```
+     sudo yum install libmemcached libmemcached-devel
+ ```
+ Then
+ ```
+     pip install pylibmc==1.2.3
+ ```
+ (notice that 1.3 seems wrong for me...)
+* memcached server
+ ```
+     sudo yum install memcached
+ ```
+ Along with its config file
+  ```
+      sudo vim /etc/sysconfig/memcached
+  ```
+  Change the option to localhost only
+  ```
+      OPTIONS="-l 127.0.0.1"
+  ```
+
+
 
 ## Always TODOS
 * Use flask-cache to cache html
