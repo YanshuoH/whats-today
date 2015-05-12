@@ -24,7 +24,7 @@ class Config(object):
     LIST_AUTOLOAD_INTERVAL = 1000 * 120
 
 class ProdConfig(Config):
-    pass
+    CACHE_MEMCACHED_SERVERS = '127.0.0.1:11211'
 
 class DevConfig(Config):
     DEBUG = True

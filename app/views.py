@@ -1,5 +1,5 @@
 import datetime
-from app import app, db, lm
+from app import app, db, lm, cache
 from models import User, Word
 from forms import WordForm
 from oauth import OAuthSignIn
@@ -12,6 +12,7 @@ from sqlalchemy import and_
 @app.route('/')
 @app.route('/today')
 @login_required
+@cache.cached(timeout=120)
 def today():
     return render_template('today.html',
                            title='Today')
@@ -21,6 +22,7 @@ def unauthorized_callback():
     return redirect(url_for('login'))
 
 @app.route('/login')
+@cache.cached(timeout=120)
 def login():
     if current_user.is_authenticated():
         return redirect(url_for('today'))
@@ -30,6 +32,7 @@ def login():
 
 @app.route('/list')
 @login_required
+@cache.cached(timeout=120)
 def list():
     interval = app.config['LIST_AUTOLOAD_INTERVAL']
     return render_template('list.html',

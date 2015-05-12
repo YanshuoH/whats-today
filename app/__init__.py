@@ -3,6 +3,7 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask.ext.script import Manager
+from flask.ext.cache import Cache
 from flask_assets import Environment
 from webassets.loaders import PythonLoader as PythonAssetsLoader
 
@@ -12,6 +13,15 @@ app = Flask(__name__)
 env = os.environ.get('WHATSTODAY_ENV', 'dev')
 app.config.from_object('app.settings.%sConfig' % env.capitalize())
 app.config['ENV'] = env
+
+# Memcached
+if env == 'dev':
+    # Use Simple Cache
+    cache = Cache(app,config={'CACHE_TYPE': 'simple'})
+else:
+    # Use Memcache server
+    pass
+cache.init_app(app)
 
 # DB
 db = SQLAlchemy(app)
