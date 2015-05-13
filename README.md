@@ -126,7 +126,7 @@ Here's how to proceed
      ```
    * http://YOUR_IP_OR_DOMAIN:8000/
 
-## Something about memcached (Not completed yet)
+## Something about memcached (Request parts not completed yet)
 This project uses Flask-Cache's memcached system, so it requires
 * *pylibmc* which requires also *libmemcached* in system's ENV
  ```
@@ -136,21 +136,31 @@ This project uses Flask-Cache's memcached system, so it requires
  ```
      pip install pylibmc==1.2.3
  ```
+
  (notice that 1.3 seems wrong for me...)
+
 * memcached server
+
  ```
      sudo yum install memcached
  ```
  Along with its config file
+
   ```
       sudo vim /etc/sysconfig/memcached
   ```
   Change the option to localhost only
+
   ```
       OPTIONS="-l 127.0.0.1"
   ```
+* Check if memcached server runs
+  ```
+      memcached -u memcached -vv
+  ```
+* In ```__init__.py```
 
-
+  Already in codes, if env == prod, then use memcached server with 127.0.0.1:11211
 
 ## Always TODOS
 * Use flask-cache to cache html
