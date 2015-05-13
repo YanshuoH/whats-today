@@ -17,10 +17,14 @@ app.config['ENV'] = env
 # Memcached
 if env == 'dev':
     # Use Simple Cache
-    cache = Cache(app,config={'CACHE_TYPE': 'simple'})
+    cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 else:
-    # Use Memcache server
-    pass
+    import pylibmc
+    def pylibmc_cache(app, config, args, kwargs):
+        return pylibmc.Client(servers=app.config['CACHE_MEMCACHED_SERVERS'],
+                              binary=True)
+    cache = Cache(app, config={'CACHE_TYPE': pylibmc_cache})
+
 cache.init_app(app)
 
 # DB
