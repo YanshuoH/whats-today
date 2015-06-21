@@ -21,8 +21,6 @@ class Config(object):
 
     DAY_DELTA = [0, 1, 2, 4, 7, 15]
 
-    LIST_AUTOLOAD_INTERVAL = 1000 * 120
-
     WORDS_PER_PAGE = 50
 
 class ProdConfig(Config):

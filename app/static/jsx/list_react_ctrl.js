@@ -21,7 +21,6 @@ var ListWrapView = React.createClass({
   },
   componentDidMount: function () {
     this.loadWordsFromServer();
-    setInterval(this.loadWordsFromServer, this.props.dataLoadInterval);
   },
   handleDeleteClickCallback: function (wordID) {
     var results = $.grep(this.props.words, function (word) {
@@ -166,5 +165,4 @@ var WordRowView = React.createClass({
 
 listReactWrapDom = document.getElementById('listReactWrap');
 listApiUrl = listReactWrapDom.getAttribute('data-url');
-dataLoadInterval = listReactWrapDom.getAttribute('data-load-interval');
 React.render(<ListWrapView listApiUrl={listApiUrl} dataLoadInterval={dataLoadInterval} />, listReactWrapDom);

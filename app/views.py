@@ -34,10 +34,8 @@ def login():
 @login_required
 @cache.cached(timeout=120)
 def list():
-    interval = app.config['LIST_AUTOLOAD_INTERVAL']
     return render_template('list.html',
-                           title='List',
-                           interval=interval)
+                           title='List')
 
 @app.route('/api/list')
 @login_required
