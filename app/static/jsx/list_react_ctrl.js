@@ -6,9 +6,23 @@ var ListWrapView = React.createClass({
       words: []
     }
   },
-  loadWordsFromServer: function () {
+  loadWordsFromServer: function (pageNumber, searchText) {
+    var paramsObject = {};
+    if (pageNumber !== undefined && pageNumber) {
+      paramsObject['page_number'] = pageNumber;
+    }
+
+    if (searchText !== undefined && searchText) {
+      paramsObject['search_word'] = searchText;
+    }
+
+    var queryUrl = this.props.listApiUrl;
+    if (Object.keys(paramsObject).length > 0) {
+      queryUrl += '?' + $.param(paramsObject);
+    }
+
     $.ajax({
-      url: this.props.listApiUrl,
+      url: queryUrl,
       dataType: 'json',
       success: function(data) {
         this.props.words = data.words;
@@ -48,24 +62,18 @@ var ListWrapView = React.createClass({
   },
   handleSearchSubmit: function (searchText) {
     if (searchText.length > 0) {
-      var results = $.grep(this.props.words, function (word) {
-        var n = word.name.search(new RegExp(searchText, 'i'));
-        if (n > -1) {
-          return true;
-        }
-
-        return false;
-      });
-
-      this.setState({ words: results });
+      this.loadWordsFromServer(null, searchText);
     } else {
-      this.setState({ words: this.props.words });
+      this.loadWordsFromServer();
     }
   },
   render: function () {
     return (<div>
         <SearchView handleSearchSubmitCallback={this.handleSearchSubmit}/>
-        <ListView words={this.state.words} handleDeleteClickCallback={this.handleDeleteClickCallback}/>
+        <ListView
+          words={this.state.words}
+          handleDeleteClickCallback={this.handleDeleteClickCallback}
+          wordPerPage={this.props.wordPerPage}/>
         </div>)
   }
 });
@@ -108,6 +116,7 @@ var ListView = React.createClass({
 
     return (<div className='row'>
               <div className='col-md-12'>
+                <p>* This list contains only {this.props.wordPerPage} words, you may want to use the search engine</p>
                 <table className='table table-striped table-hover'>
                   <thead>
                     <tr>
@@ -165,4 +174,5 @@ var WordRowView = React.createClass({
 
 listReactWrapDom = document.getElementById('listReactWrap');
 listApiUrl = listReactWrapDom.getAttribute('data-url');
-React.render(<ListWrapView listApiUrl={listApiUrl} dataLoadInterval={dataLoadInterval} />, listReactWrapDom);
+wordPerPage = listReactWrapDom.getAttribute('data-per-page');
+React.render(<ListWrapView listApiUrl={listApiUrl} wordPerPage={wordPerPage}/>, listReactWrapDom);

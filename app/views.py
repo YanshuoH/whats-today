@@ -34,8 +34,10 @@ def login():
 @login_required
 @cache.cached(timeout=120)
 def list():
+    WORDS_PER_PAGE = app.config['WORDS_PER_PAGE']
     return render_template('list.html',
-                           title='List')
+                           title='List',
+                           WORDS_PER_PAGE=WORDS_PER_PAGE)
 
 @app.route('/api/list')
 @login_required

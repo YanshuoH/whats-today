@@ -7,7 +7,7 @@
         <h1 class="page-title">List of words</h1>
       </div>
     </div>
-    <div id="listReactWrap" data-url="{{ url_for('api_list') }}"></div>
+    <div id="listReactWrap" data-url="{{ url_for('api_list') }}" data-per-page="{{ WORDS_PER_PAGE }}"></div>
   </div>
 {% endblock %}
 
