@@ -23,6 +23,8 @@ class Config(object):
 
     LIST_AUTOLOAD_INTERVAL = 1000 * 120
 
+    WORDS_PER_PAGE = 50
+
 class ProdConfig(Config):
     CACHE_MEMCACHED_SERVERS = '127.0.0.1:11211'
 

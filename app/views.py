@@ -42,7 +42,29 @@ def list():
 @app.route('/api/list')
 @login_required
 def api_list():
-    words = g.user.words.all()
+    page_number_args = request.args.get('page_number')
+    search_word_args = request.args.get('search_word')
+
+    WORDS_PER_PAGE = app.config['WORDS_PER_PAGE']
+
+    if page_number_args is not None:
+        try:
+            page_number = int(page_number_args)
+        except ValueError:
+            return jsonify(email=g.user.email,
+                           words=[],
+                           error_code=500,
+                           error_msg='page_number value not valid')
+    else:
+        page_number = 1
+
+    # Query builder
+    query = g.user.words
+    if search_word_args is not None and search_word_args != '':
+        query = query.filter(Word.name.like('%' + search_word_args + '%'))
+
+    words = query.paginate(page_number, WORDS_PER_PAGE, False).items
+
     return jsonify(email=g.user.email,
                    words=[word.serialize for word in words])
 
