@@ -19,6 +19,7 @@ Vocabulary learning strategy
 ## Run
 * ``` flask/Scripts/python manager.py runserver ```
 * Navigator: ``` http://localhost:5000  ```
+* Mailer: ``` flask/Scripts/python reminder_mailer.py ```
 
 ## Developement
 * Jsx watching: ```jsx --watch app/static/jsx/ app/static/js```
