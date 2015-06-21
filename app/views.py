@@ -87,7 +87,7 @@ def add():
 
         db.session.add(word)
         db.session.commit()
-        flash('Your word have been saved.', 'info')
+        flash('Word "%s" has been saved.' % form.name.data, 'info')
         return redirect(url_for('add'))
 
     return render_template('form.html',
@@ -105,16 +105,17 @@ def edit(word_id):
     elif word.user_id != g.user.id:
         flash('You can\'t edit this word!', 'warning')
         return redirect(url_for('add'))
-    else:
-        form = WordForm(obj=word)
-        if form.validate_on_submit():
-            word.name = form.name.data
-            word.explain = form.explain.data
-            word.example = form.example.data
-            word.updated_at = datetime.datetime.utcnow()
-            db.session.add(word)
-            db.session.commit()
 
+    form = WordForm(obj=word)
+    if form.validate_on_submit():
+        word.name = form.name.data
+        word.explain = form.explain.data
+        word.example = form.example.data
+        word.updated_at = datetime.datetime.utcnow()
+        db.session.add(word)
+        db.session.commit()
+
+    flash('Word "%s" has been modified.' % form.name.data, 'info')
     return render_template('form.html',
                            form=form,
                            title='Edit',
