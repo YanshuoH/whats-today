@@ -164,11 +164,11 @@ This project uses Flask-Cache's memcached system, so it requires
   Already in codes, if env == prod, then use memcached server with 127.0.0.1:11211
 
 ## Always TODOS
-* Use flask-cache to cache html
+* ~~Use flask-cache to cache html~~
 * Use ~~nginx~~ to cache assets
 * Minify react's JS files
 * Logger
-* Mailer system
-* Pagination of list page
+* ~~Mailer system~~
+* ~~Pagination of list page~~
 * Weibo connect
 * Unit tests (for god's sake...)
