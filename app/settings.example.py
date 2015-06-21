@@ -23,6 +23,14 @@ class Config(object):
 
     WORDS_PER_PAGE = 50
 
+    MAIL_SERVER = 'smtp.googlemail.com'
+    MAIL_PORT = 465
+    MAIL_USE_SSL = True
+    MAIL_USERNAME = 'your email address'
+    MAIL_PASSWORD = 'your pwd'
+
+    APP_DOMAIN = 'your app domain'
+
 class ProdConfig(Config):
     CACHE_MEMCACHED_SERVERS = '127.0.0.1:11211'
 
