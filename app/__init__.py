@@ -4,6 +4,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask.ext.script import Manager
 from flask.ext.cache import Cache
+from flask.ext.mail import Mail
 from flask_assets import Environment
 from webassets.loaders import PythonLoader as PythonAssetsLoader
 
@@ -43,5 +44,9 @@ for name, bundle in assets_loader.load_bundles().iteritems():
 
 # Script manager
 manager = Manager(app)
+
+mail = Mail()
+# Mail manager
+mail.init_app(app)
 
 from app import views, models

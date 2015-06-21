@@ -73,23 +73,7 @@ def api_list():
 @app.route('/api/today')
 @login_required
 def api_today():
-    day_delta = app.config['DAY_DELTA']
-
-    words_today = []
-    for repeat_count in xrange(len(day_delta)):
-        interval = {
-            'left':  datetime.date.today() -\
-                     datetime.timedelta(days=day_delta[repeat_count]),
-            'right': datetime.date.today() -\
-                     datetime.timedelta(days=day_delta[repeat_count] - 1),
-        }
-        words = db.session.query(Word).filter(
-            and_(
-                Word.created_at.between(interval['left'],
-                                        interval['right']),
-                Word.user_id == g.user.id)
-            ).all()
-        words_today += words
+    words_today = get_today_words()
 
     return jsonify(words=[word.serialize for word in words_today],
                    today=datetime.date.today().strftime("%Y-%m-%d %H:%M:%S"))
@@ -198,3 +182,29 @@ def oauth_callback(provider):
 @app.before_request
 def before_request():
     g.user = current_user
+
+# private function, get today's words list
+def get_today_words(user = None):
+    day_delta = app.config['DAY_DELTA']
+    words_today = []
+
+    if user is not None:
+        current_user = user
+    else:
+        current_user = g.user
+    for repeat_count in xrange(len(day_delta)):
+        interval = {
+            'left':  datetime.date.today() -\
+                     datetime.timedelta(days=day_delta[repeat_count]),
+            'right': datetime.date.today() -\
+                     datetime.timedelta(days=day_delta[repeat_count] - 1),
+        }
+        words = db.session.query(Word).filter(
+            and_(
+                Word.created_at.between(interval['left'],
+                                        interval['right']),
+                Word.user_id == current_user.id)
+            ).all()
+        words_today += words
+
+    return words_today
