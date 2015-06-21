@@ -29,10 +29,10 @@ TodayWrapView = React.createClass({
     this.loadWordsFromServer();
   },
   handleNextClickCallback: function () {
-    this.state.pos += 1;
-    if (this.state.pos > this.props.words.length) {
+    if (this.state.pos >= this.props.words.length - 1) {
       this.setState({ isDone: true });
     } else {
+      this.state.pos += 1;
       this.setState({
         pos: this.state.pos,
         currentWord: this.props.words[this.state.pos]
@@ -123,6 +123,20 @@ Pager = React.createClass({
   handleNextClick: function (e) {
     e.preventDefault();
     this.props.handleNextClickCallback();
+  },
+  componentDidMount: function () {
+    var previousButton = $('.pager .previous a').get(0);
+    var nextButton = $('.pager .next a').get(0);
+    // Bending keyboard press to pager using jQuery
+    $(document).keydown(function (e) {
+      if (e.which === 37 || e.which === 38) {
+        // left or up
+        previousButton.click();
+      } else if (e.which === 39 || e.which === 40) {
+        // right or down
+        nextButton.click();
+      }
+    });
   },
   render: function () {
     var style = ((this.props.pos + 1) / (this.props.wordCount)) * 100;
