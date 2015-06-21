@@ -12,3 +12,4 @@ closure==20150315
 rauth==0.7.1
 flipflop==1.0
 flask-cache==0.13.1
+flask-mail==0.9.1
